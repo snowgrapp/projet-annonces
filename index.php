@@ -8,7 +8,7 @@
             <p class='lead'>
                 <a class='btn btn-primary btn-lg' href='membres.php' role='button'>Membres ;)</a>
                 <a class='btn btn-primary btn-lg' href='categories.php' role='button'>Categories ;) </a>
-                <a class='btn btn-primary btn-lg' href='annonces.php' role='button'>Annonces </a>
+                <a class='btn btn-primary btn-lg' href='annonces.php' role='button'>Annonces :)</a>
                 <a class='btn btn-primary btn-lg' href='connexion.php' role='button'>Connexion </a>
                 <a class='btn btn-primary btn-lg' href='contact.php' role='button'>Contact </a>
             </p>
