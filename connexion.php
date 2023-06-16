@@ -1,7 +1,7 @@
 <?php
 require_once 'functions.php';
 if($_SERVER["REQUEST_METHOD"]=="POST") {
-    $test=Loguser();
+    $test=LoginUser();
     print_r($test);
 }
 ?>
