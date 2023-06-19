@@ -8,3 +8,4 @@
 
 <body>
 <div class='container'>
+<?php session_start() ?>

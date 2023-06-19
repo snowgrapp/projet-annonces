@@ -4,9 +4,6 @@
 
 <?php
 
-session_start(); // Démarre la session (doit être appelé avant toute sortie HTML)
-
-// Connexion à la base de données et renvoie l'objet PDO
 function connect() {
     // hôte
     $hostname = 'localhost';
@@ -43,30 +40,53 @@ function getMembreByMail($mail) {
     return false;
 }
 
-// Fonction de connexion de l'utilisateur
-function loginUser() {
-    $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL); // Ne pas utiliser filter_var ici
-    $membre = getMembreByMail($mail);
-    if ($membre) {
-        if (password_verify($_POST['hash_'], $membre['hash_'])) {
-            /* Vérifier l'état du compte utilisateur ici si nécessaire
-            if ($membre['actif']) {
-                $_SESSION['is_login'] = true;
-                $_SESSION['is_actif'] = $membre['actif'];
-                $_SESSION['id'] = $membre['id'];
-                return array("success", "Connexion réussie :)");
-            } else {
-                return array("error", "Veuillez activer votre compte");
-            }*/
-            $_SESSION['is_login'] = true; 
-            $_SESSION['id'] = $membre['id'];
-            return array("success", "Connexion réussie :)");
-        } else {
-            return array("error", "Mauvais identifiants");
-        }
-    } else {
-        return array("error", "Mauvais identifiants");
-    }
+function getMembres() {
+
+    $db = connect();
+    $query = mysqli_query($db, "SELECT * FROM membres");
+    if (!$query)
+        throw new Exception(mysqli_error($db));
+    else
+        return mysqli_fetch_all($query,MYSQLI_ASSOC);
 }
+
+
+function getCategories() {
+
+    $db = connect();
+    $query = mysqli_query($db, "SELECT * FROM categories");
+    if (!$query)
+        throw new Exception(mysqli_error($db));
+    else
+        return mysqli_fetch_all($query,MYSQLI_ASSOC);
+}
+
+
+function getAnnonces() {
+
+    $db = connect();
+    $query = mysqli_query($db, "SELECT * FROM ");
+    if (!$query)
+        throw new Exception(mysqli_error($db));
+    else
+        return mysqli_fetch_all($query,MYSQLI_ASSOC);
+}
+
+function loginUser() {
+    $mail=filter_var(filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL));
+    $membre=getMembreByMail($mail);
+    if($membre){
+        if(password_verify($_POST['hash_'], $membre['hash_'])){
+            if($membre['actif']){
+                $_SESSION['is_login']=true;
+                $_SESSION['actif']=$membre['actif'];
+                $_SESSION['id']=$membre['id'];
+                return array("success", "Connexion réussie :)");               
+            }else return array("error", "Veuillez activer votre compte");
+        }else return array("error", "Mauvais identifiants");
+    }else return array("error", "Mauvais identifiants");
+}
+
+
 
 ?>

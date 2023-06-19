@@ -1,4 +1,5 @@
 <?php
+
 require_once 'functions.php';
 
 // L'ID est-il dans les paramètres d'URL?

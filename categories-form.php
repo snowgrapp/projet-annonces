@@ -1,6 +1,6 @@
 <?php
 
-// Import des fonctions
+
 require_once 'functions.php';
 
 // Pour éviter de dupliquer le code, ce formulaire sera utiliser pour créer ou modifier un abo. Si l'url est appelée avec id= alors nous l'utiliserons pour éditer l'abo avec l'id spécifié. 
