@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
                 <input type="text" class="form-control" id="mail" name="mail" required>
             </div>
             <div class="form-group">
-                <label for="password">Mot de passe</label>
+                <label for="hash_">Mot de passe</label>
                 <input type="text" class="form-control" id="hash_" name="hash_" required>
             </div>
             <button type="submit" name="submit" class="btn btn-primary">Se connecter</button>

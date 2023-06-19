@@ -72,21 +72,19 @@ function getAnnonces() {
         return mysqli_fetch_all($query,MYSQLI_ASSOC);
 }
 
-function loginUser() {
-    $mail=filter_var(filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL));
+function LoginUser() {
+    $mail=filter_var(filter_input(INPUT_POST, "mail", FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
     $membre=getMembreByMail($mail);
     if($membre){
         if(password_verify($_POST['hash_'], $membre['hash_'])){
-            if($membre['actif']){
-                $_SESSION['is_login']=true;
-                $_SESSION['actif']=$membre['actif'];
+            if($membre['is_actif']){
+                $_SESSION['is_admin']=true;
+                $_SESSION['is_actif']=$membre['is_actif'];
                 $_SESSION['id']=$membre['id'];
                 return array("success", "Connexion réussie :)");               
             }else return array("error", "Veuillez activer votre compte");
         }else return array("error", "Mauvais identifiants");
     }else return array("error", "Mauvais identifiants");
 }
-
-
 
 ?>
