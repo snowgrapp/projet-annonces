@@ -12,15 +12,15 @@
 <form method="POST">
 <div>
 <p><label for="nom">Votre nom</label>
-<input type="text" id="nom" name="nom" placeholder="maxence" required></p>
+<input type="text" id="nom" name="nom" placeholder="maxence" required"></p>
 <p><label for="email">Votre e-mail</label>
-<input type="email" id="email" name="email" placeholder="monadresse@mail.com" required></p>
+<input type="email" id="email" name="email" placeholder="monadresse@mail.com" required"></p>
 <label for="sujet">Quel est le sujet de votre message ?</label>
-<input type="texte" id="sujet" name="sujet" required></p>
+<input type="texte" id="sujet" name="sujet" required"></p>
 <label for="sujet">Message</label>
-<input type="texte" id="message" name="message" required></p>
+<input type="texte" id="message" name="message" required"></p>
 
-<input type="submit" id="submit" value="Envoyer">
+<input type="submit" id="submit" value="Envoyer" class="btn btn-primary">
 
 </form>
 

@@ -15,22 +15,25 @@ if (!empty($_POST)) {
     $hash_ = $_POST['hash_'] ?? '';
 
     $db = connect();
-    
+
 
     // Un membre n'a un ID que si ses infos sont déjà enregistrées en BDD, donc on vérifie s'il  le membre a un ID.
     if (empty($_POST['id'])) {
         $hashedPassword = password_hash($_POST['hash_'], PASSWORD_DEFAULT);
+        $isActif = 1; // Remplacez la valeur par celle que vous souhaitez utiliser
+
+        $createMembreQuery = mysqli_prepare($db, "INSERT INTO membres (prenom, nom, adresse, cp, ville, date_naissance, mail, telephone, surnom, hash_, is_actif) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($createMembreQuery, "ssssssssssi", $prenom, $nom, $adresse, $cp, $ville, $date_naissance, $mail, $telephone, $surnom, $hashedPassword, $isActif);
         
-        $createMembreQuery = mysqli_prepare($db, "INSERT INTO membres (prenom, nom, adresse, cp, ville, date_naissance, mail, telephone, surnom, hash_) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        mysqli_stmt_bind_param($createMembreQuery, "ssssssssss", $prenom, $nom, $adresse, $cp, $ville, $date_naissance, $mail, $telephone, $surnom, $hashedPassword);
-        if (!mysqli_stmt_execute($createMembreQuery)){
-               $type = 'error';
-                $message = 'Membre non ajouté: '. mysqli_error($db);
-        }
-        elseif (!mysqli_stmt_affected_rows($createMembreQuery)){
+
+
+        if (!mysqli_stmt_execute($createMembreQuery)) {
+            $type = 'error';
+            $message = 'Membre non ajouté: ' . mysqli_error($db);
+        } elseif (!mysqli_stmt_affected_rows($createMembreQuery)) {
             $type = 'error';
             $message = 'Membre non ajouté';
-        }else{
+        } else {
             $type = 'success';
             $message = 'Membre ajouté';
         }
@@ -43,14 +46,13 @@ if (!empty($_POST)) {
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
         $updateMembreQuery = mysqli_prepare($db, "UPDATE membres SET prenom=?, nom=?, adresse=?, cp=?, ville=?, date_naissance=?, mail=?, telephone=?, surnom=?, hash_=? WHERE id=?");
         mysqli_stmt_bind_param($updateMembreQuery, "ssssssssssi", $prenom, $nom, $adresse, $cp, $ville, $date_naissance, $mail, $telephone, $surnom, $hash_, $id);
-        if (!mysqli_stmt_execute($updateMembreQuery)){
-               $type = 'error';
-                $message = 'Membre non mis à jour: '. mysqli_error($db);
-        }
-        elseif (!mysqli_stmt_affected_rows($updateMembreQuery)){
+        if (!mysqli_stmt_execute($updateMembreQuery)) {
+            $type = 'error';
+            $message = 'Membre non mis à jour: ' . mysqli_error($db);
+        } elseif (!mysqli_stmt_affected_rows($updateMembreQuery)) {
             $type = 'error';
             $message = 'Membre non mis à jour';
-        }else{
+        } else {
             $type = 'success';
             $message = 'Membre mis à jour';
         }
